@@ -210,7 +210,7 @@ task run_numbat {
 
     # allele_counts
     allele_counts_file = "~{allele_counts}"
-    allele_counts = read.table(allele_counts_file, sep='\t')
+    allele_counts = read.table(gzfile(allele_counts_file), sep='\t', header=TRUE)
 
     # count_mat
     count_mat_file = "~{count_matrix}"
