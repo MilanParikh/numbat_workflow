@@ -239,7 +239,7 @@ task run_numbat {
       init_k = ~{init_k},
       tau = ~{tau},
       plot = ~{plot},
-      n_cores = ~{num_cpu},
+      ncores = ~{num_cpu},
       out_dir = "outputs/~{label}"
     )
 
