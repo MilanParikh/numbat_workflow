@@ -95,7 +95,8 @@ workflow numbat_workflow {
   }
 
   output {
-    File pileup_and_phase_output = pileup_and_phase.allele_counts
+    File? pileup_and_phase_output = pileup_and_phase.allele_counts
+    File? generate_allele_file_output = create_allele_file.allele_counts
     File numbat_output = run_numbat.output_zip
   }
 }
