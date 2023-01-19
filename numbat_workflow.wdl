@@ -14,8 +14,8 @@ workflow numbat_workflow {
     File ref_count_matrix
     File ref_annotations
 
-    Boolean ran_topmed
-    String topmed_vcf_folder
+    Boolean ran_topmed = false
+    String? topmed_vcf_folder
 
     # parameters
     String transition = '1e-5'
