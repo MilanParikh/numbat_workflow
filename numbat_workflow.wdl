@@ -36,22 +36,24 @@ workflow numbat_workflow {
     String docker = "mparikhbroad/numbat:latest"
   }
 
-  call pileup_and_phase {
-    input:
-        output_directory = sub(output_directory, "/+$", ""),
-        label = label,
-        sample_name = sample_name,
-        bam_file = bam_file,
-        bam_index_file = bam_index_file,
-        barcodes_file = barcodes_file,
-        preemptible = preemptible,
-        disk_space = disk_space,
-        docker = docker,
-        num_cpu = num_cpu,
-        memory = memory,
-  }
+  if(ran_topmed == false) {
+    call pileup_and_phase {
+      input:
+          output_directory = sub(output_directory, "/+$", ""),
+          label = label,
+          sample_name = sample_name,
+          bam_file = bam_file,
+          bam_index_file = bam_index_file,
+          barcodes_file = barcodes_file,
+          preemptible = preemptible,
+          disk_space = disk_space,
+          docker = docker,
+          num_cpu = num_cpu,
+          memory = memory,
+    }
+  } 
 
-  if(ran_topmed) {
+  if(ran_topmed == true) {
       call create_allele_file {
         input:
             output_directory = sub(output_directory, "/+$", ""),
