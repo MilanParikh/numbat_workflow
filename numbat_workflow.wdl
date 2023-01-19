@@ -200,7 +200,7 @@ task create_allele_file {
     mkdir -p 'inputs/~{label}'
     mkdir -p 'outputs/~{label}/topmed_phasing'
 
-    gsutil -m rsync -r ~{output_directory} "outputs/~{label}/"
+    gsutil -m rsync -r ~{output_directory}/~{label} "outputs/~{label}/"
     gsutil -m rsync -r ~{topmed_vcf_folder} 'outputs/~{label}/topmed_phasing'
 
     R --no-save  <<RSCRIPT
