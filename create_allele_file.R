@@ -48,6 +48,7 @@ if (genome == 'hg19') {
     gtf = gtf_hg38
 }
 
+cat('Reading genetic map\n')
 genetic_map = fread(gmap) %>% 
     setNames(c('CHROM', 'POS', 'rate', 'cM')) %>%
     group_by(CHROM) %>%
@@ -60,6 +61,7 @@ genetic_map = fread(gmap) %>%
 for (sample in samples) {
     
     # read in phased VCF
+    cat('Reading topmed VCF files\n')
     vcf_phased = lapply(1:22, function(chr) {
             vcf_file = glue('{outdir}/topmed_phasing/chr{chr}.dose.vcf.gz')
             if (file.exists(vcf_file)) {
@@ -76,16 +78,20 @@ for (sample in samples) {
     pu_dir = glue('{outdir}/pileup/{sample}')
 
     # pileup VCF
+    cat('Reading pileup vcf file\n')
     vcf_pu = fread(glue('{pu_dir}/cellSNP.base.vcf'), skip = '#CHROM') %>% 
         rename(CHROM = `#CHROM`) %>%
         mutate(CHROM = str_remove(CHROM, 'chr'))
 
     # count matrices
+    cat('Reading count matrices\n')
     AD = readMM(glue('{pu_dir}/cellSNP.tag.AD.mtx'))
     DP = readMM(glue('{pu_dir}/cellSNP.tag.DP.mtx'))
 
+    cat('Reading cell barcodes file\n')
     cell_barcodes = fread(glue('{pu_dir}/cellSNP.samples.tsv'), header = F) %>% pull(V1)
 
+    cat('Generating actual allele count dataframes\n')
     df = numbat:::preprocess_allele(
         sample = label,
         vcf_pu = vcf_pu,
