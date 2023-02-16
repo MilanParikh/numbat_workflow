@@ -8,7 +8,7 @@ workflow numbat_workflow {
     String label
     String sample_name
     File bam_file
-    File bam_index_file
+    File? bam_index_file
     File barcodes_file
     File count_matrix
     File ref_count_matrix
@@ -107,7 +107,7 @@ task pileup_and_phase {
     String label
     String sample_name
     File bam_file
-    File bam_index_file
+    File? bam_index_file
     File barcodes_file
     Int preemptible
     Int disk_space
@@ -132,7 +132,7 @@ task pileup_and_phase {
     sample = "~{sample_name}"
 
     bam_file = "~{bam_file}"
-    bam_index_file  = "~{bam_index_file}"
+    #bam_index_file  = "~{bam_index_file}"
     barcode_file = "~{barcodes_file}"
 
     if (endsWith(barcode_file[[1]], 'gz')) {
